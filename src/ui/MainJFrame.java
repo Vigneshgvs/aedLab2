@@ -47,6 +47,11 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btnSearch.setText("Search Car(s)");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -107,11 +112,16 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        CreateJPanel createPanel = new CreateJPanel();
+        CreateJPanel createPanel = new CreateJPanel(catalog);
         splitPane.setRightComponent(createPanel);
         
-        
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        ViewJPanel viewPanel = new ViewJPanel(catalog);
+        splitPane.setRightComponent(viewPanel);
+        
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments

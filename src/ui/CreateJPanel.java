@@ -4,17 +4,36 @@
  */
 package ui;
 
+import java.util.Date;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import model.Car;
+import model.CarCatalog;
+
 /**
  *
  * @author vigneshguna
  */
 public class CreateJPanel extends javax.swing.JPanel {
 
+    CarCatalog catalog;
+    
+    
+    
+    
     /**
      * Creates new form CreateJPanel
      */
-    public CreateJPanel() {
+    public CreateJPanel(CarCatalog catalog) {
         initComponents();
+        this.catalog = catalog;
+
+        ButtonGroup isAvailgroup = new ButtonGroup();
+        isAvailgroup.add(rdbAvailY);
+        isAvailgroup.add(rdbAvailN);
+        ButtonGroup isExpiredMaintCertiGroup = new ButtonGroup();
+        isExpiredMaintCertiGroup.add(rdbExpiredMaintCertiN);
+        isExpiredMaintCertiGroup.add(rdbExpiredMaintCertiY);
     }
 
     /**
@@ -111,6 +130,11 @@ public class CreateJPanel extends javax.swing.JPanel {
         rdbExpiredMaintCertiN.setText("No");
 
         jButton1.setText("Add Car");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -223,6 +247,48 @@ public class CreateJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCurrentCityActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        
+     int carSerialNumber = Integer.parseInt(txtSerialNum.getText());
+     String currentCity = txtCurrentCity.getText();
+     boolean isAvailabile = (rdbAvailY.isSelected())? true:false;
+     String manufacturer = txtManuf.getText();
+     int manufYear = Integer.parseInt(txtManufYear.getText());
+     int numOfSeats = Integer.parseInt(txtNoOfSeats.getText());
+     String modelNum = txtModelNum.getText();
+     Date creationTime = new Date();
+     Date updationTime = null;
+     boolean isExpiredMaintCerti = (rdbExpiredMaintCertiY.isSelected())? true:false;
+     
+     Car car = catalog.addNewCar();
+     
+     car.setCarSerialNumber(carSerialNumber);
+     car.setCurrentCity(currentCity);
+     car.setIsAvailabile(isAvailabile);
+     car.setManufacturer(manufacturer);
+     car.setManufYear(manufYear);
+     car.setNumOfSeats(numOfSeats);
+     car.setNumOfSeats(numOfSeats);
+     car.setIsExpiredMaintCerti(isExpiredMaintCerti);
+     car.setCreationTime(creationTime);
+     car.setUpdationTime(updationTime);
+     
+        JOptionPane.showMessageDialog(this, "New Car details are added");
+        txtSerialNum.setText("");
+        txtCurrentCity.setText("");
+        txtManuf.setText("");
+        txtManufYear.setText("");
+        txtNoOfSeats.setText("");
+        txtModelNum.setText("");
+        rdbAvailY.setSelected(false);
+        rdbAvailN.setSelected(false);
+        rdbExpiredMaintCertiY.setSelected(false);
+        rdbExpiredMaintCertiN.setSelected(false);
+        
+     
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -246,4 +312,7 @@ public class CreateJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtNoOfSeats;
     private javax.swing.JTextField txtSerialNum;
     // End of variables declaration//GEN-END:variables
+
+
+
 }

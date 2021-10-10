@@ -17,17 +17,17 @@ import java.util.Set;
  */
 public class CarCatalog {
     
-    private static CarCatalog obj;
+    //private static CarCatalog obj;
     private boolean isFirstTime = true;
    
     private Date lastUpdated;
     private int totalCars=0;
     private int availableCars=0;
     private int unAvailableCars=0;
-    private Set<Car> carsFullList = new HashSet<Car>();
-    private Set<Car> carsCityList = new HashSet<Car>();
-    private Set<Car> carsFilterList = new HashSet<Car>();
-    private Set<Car> carsTableList = new HashSet<Car>();
+    private List<Car> carsFullList = new ArrayList<Car>();
+    private List<Car> carsCityList = new ArrayList<Car>();
+    private List<Car> carsFilterList = new ArrayList<Car>();
+    private List<Car> carsTableList = new ArrayList<Car>();
     //private Set<Car> carsPrevFilterList = new HashSet<Car>();
     
     //singleton class - coz only values of lastupdated, carsfulllist need to be holding record from starting
@@ -35,16 +35,22 @@ public class CarCatalog {
     public CarCatalog(){
         
     }
-    public static CarCatalog getObj(){
+    /*public static CarCatalog getObj(){
         if (obj==null) {
             obj = new CarCatalog();
         }
         return obj;
+    }*/
+    
+    public Car addNewCar() {
+        Car car = new Car();
+        carsFullList.add(car);
+        return car;
     }
     
     public void doIfFirstTime(){
         if(isFirstTime){
-            carsFilterList = new HashSet<Car>(carsCityList);
+            carsFilterList = new ArrayList<Car>(carsCityList);
         }
     }
     public void cancelFilter(){
@@ -52,13 +58,13 @@ public class CarCatalog {
     }
     
 
-    public Set<Car> addFilterCity(String city){
-        carsCityList = new HashSet<Car>();
-        carsFilterList = new HashSet<Car>();
-        carsTableList = new HashSet<Car>();
+    public List<Car> addFilterCity(String city){
+        carsCityList = new ArrayList<Car>();
+        carsFilterList = new ArrayList<Car>();
+        carsTableList = new ArrayList<Car>();
         
         for (Car car : carsFullList) {
-            if(car.getCity().equals(city)){
+            if(car.getCurrentCity().equals(city)){
                 carsCityList.add(car);
             }
         }
@@ -81,6 +87,10 @@ public class CarCatalog {
         availableCars = sumAvailable;
         unAvailableCars = totalCars - availableCars;
     }
+    
+    
+    
+    
     /*public Set<Car> removeFilter(){
         carsFilterList = new HashSet<Car>(carsPrevFilterList);
     }*/
@@ -129,6 +139,78 @@ public class CarCatalog {
         assignAvailCars(carsFilterList);
         return carsFilterList;
     }*/
+
+    public boolean isIsFirstTime() {
+        return isFirstTime;
+    }
+
+    public void setIsFirstTime(boolean isFirstTime) {
+        this.isFirstTime = isFirstTime;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public int getTotalCars() {
+        return totalCars;
+    }
+
+    public void setTotalCars(int totalCars) {
+        this.totalCars = totalCars;
+    }
+
+    public int getAvailableCars() {
+        return availableCars;
+    }
+
+    public void setAvailableCars(int availableCars) {
+        this.availableCars = availableCars;
+    }
+
+    public int getUnAvailableCars() {
+        return unAvailableCars;
+    }
+
+    public void setUnAvailableCars(int unAvailableCars) {
+        this.unAvailableCars = unAvailableCars;
+    }
+
+    public List<Car> getCarsFullList() {
+        return carsFullList;
+    }
+
+    public void setCarsFullList(List<Car> carsFullList) {
+        this.carsFullList = carsFullList;
+    }
+
+    public List<Car> getCarsCityList() {
+        return carsCityList;
+    }
+
+    public void setCarsCityList(List<Car> carsCityList) {
+        this.carsCityList = carsCityList;
+    }
+
+    public List<Car> getCarsFilterList() {
+        return carsFilterList;
+    }
+
+    public void setCarsFilterList(List<Car> carsFilterList) {
+        this.carsFilterList = carsFilterList;
+    }
+
+    public List<Car> getCarsTableList() {
+        return carsTableList;
+    }
+
+    public void setCarsTableList(List<Car> carsTableList) {
+        this.carsTableList = carsTableList;
+    }
     
     
     

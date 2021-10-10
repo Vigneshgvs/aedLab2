@@ -13,7 +13,7 @@ import java.util.Date;
 public class Car {
     
     private int carSerialNumber;
-    private String city;
+    private String currentCity;
     private boolean isAvailabile;
     private String manufacturer;
     private int manufYear;
@@ -21,7 +21,6 @@ public class Car {
     private String modelNum;
     private Date creationTime;
     private Date updationTime;
-    private String currentCity;
     private boolean isExpiredMaintCerti;
 
     public int getCarSerialNumber() {
@@ -30,14 +29,6 @@ public class Car {
 
     public void setCarSerialNumber(int carSerialNumber) {
         this.carSerialNumber = carSerialNumber;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
     
     public boolean isIsAvailabile() {
