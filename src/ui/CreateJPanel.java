@@ -4,7 +4,12 @@
  */
 package ui;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import model.Car;
@@ -17,10 +22,7 @@ import model.CarCatalog;
 public class CreateJPanel extends javax.swing.JPanel {
 
     CarCatalog catalog;
-    
-    
-    
-    
+
     /**
      * Creates new form CreateJPanel
      */
@@ -64,7 +66,7 @@ public class CreateJPanel extends javax.swing.JPanel {
         rdbAvailN = new javax.swing.JRadioButton();
         rdbExpiredMaintCertiY = new javax.swing.JRadioButton();
         rdbExpiredMaintCertiN = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         lblTitle.setText("Create Car");
@@ -129,10 +131,10 @@ public class CreateJPanel extends javax.swing.JPanel {
 
         rdbExpiredMaintCertiN.setText("No");
 
-        jButton1.setText("Add Car");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Add Car");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -171,7 +173,7 @@ public class CreateJPanel extends javax.swing.JPanel {
                                 .addComponent(rdbExpiredMaintCertiN))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(379, 379, 379)
-                        .addComponent(jButton1))
+                        .addComponent(btnAdd))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(401, 401, 401)
                         .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -218,7 +220,7 @@ public class CreateJPanel extends javax.swing.JPanel {
                         .addComponent(rdbExpiredMaintCertiY)
                         .addComponent(rdbExpiredMaintCertiN)))
                 .addGap(44, 44, 44)
-                .addComponent(jButton1)
+                .addComponent(btnAdd)
                 .addContainerGap(148, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -247,33 +249,33 @@ public class CreateJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCurrentCityActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        
-     int carSerialNumber = Integer.parseInt(txtSerialNum.getText());
-     String currentCity = txtCurrentCity.getText();
-     boolean isAvailabile = (rdbAvailY.isSelected())? true:false;
-     String manufacturer = txtManuf.getText();
-     int manufYear = Integer.parseInt(txtManufYear.getText());
-     int numOfSeats = Integer.parseInt(txtNoOfSeats.getText());
-     String modelNum = txtModelNum.getText();
-     Date creationTime = new Date();
-     Date updationTime = null;
-     boolean isExpiredMaintCerti = (rdbExpiredMaintCertiY.isSelected())? true:false;
-     
-     Car car = catalog.addNewCar();
-     
-     car.setCarSerialNumber(carSerialNumber);
-     car.setCurrentCity(currentCity);
-     car.setIsAvailabile(isAvailabile);
-     car.setManufacturer(manufacturer);
-     car.setManufYear(manufYear);
-     car.setNumOfSeats(numOfSeats);
-     car.setNumOfSeats(numOfSeats);
-     car.setIsExpiredMaintCerti(isExpiredMaintCerti);
-     car.setCreationTime(creationTime);
-     car.setUpdationTime(updationTime);
-     
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+
+        int carSerialNumber = Integer.parseInt(txtSerialNum.getText());
+        String currentCity = txtCurrentCity.getText();
+        boolean isAvailabile = (rdbAvailY.isSelected()) ? true : false;
+        String manufacturer = txtManuf.getText();
+        int manufYear = Integer.parseInt(txtManufYear.getText());
+        int numOfSeats = Integer.parseInt(txtNoOfSeats.getText());
+        String modelNum = txtModelNum.getText();
+        boolean isExpiredMaintCerti = (rdbExpiredMaintCertiY.isSelected()) ? true : false;
+
+        Date creationTime = new Date();
+        Date updationTime = null;
+
+        Car car = catalog.addNewCar();          // add as a new car
+
+        car.setCarSerialNumber(carSerialNumber);
+        car.setCurrentCity(currentCity);
+        car.setIsAvailabile(isAvailabile);
+        car.setManufacturer(manufacturer);
+        car.setManufYear(manufYear);
+        car.setNumOfSeats(numOfSeats);
+        car.setModelNum(modelNum);
+        car.setIsExpiredMaintCerti(isExpiredMaintCerti);
+        car.setCreationTime(creationTime);
+        car.setUpdationTime(updationTime);
+
         JOptionPane.showMessageDialog(this, "New Car details are added");
         txtSerialNum.setText("");
         txtCurrentCity.setText("");
@@ -285,13 +287,13 @@ public class CreateJPanel extends javax.swing.JPanel {
         rdbAvailN.setSelected(false);
         rdbExpiredMaintCertiY.setSelected(false);
         rdbExpiredMaintCertiN.setSelected(false);
-        
-     
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+
+    }//GEN-LAST:event_btnAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JLabel lblCurrentCity;
     private javax.swing.JLabel lblIsAvail;
     private javax.swing.JLabel lblIsExpiredMaintCerti;
@@ -312,7 +314,5 @@ public class CreateJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtNoOfSeats;
     private javax.swing.JTextField txtSerialNum;
     // End of variables declaration//GEN-END:variables
-
-
 
 }

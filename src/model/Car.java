@@ -11,7 +11,7 @@ import java.util.Date;
  * @author vigneshguna
  */
 public class Car {
-    
+
     private int carSerialNumber;
     private String currentCity;
     private boolean isAvailabile;
@@ -23,6 +23,11 @@ public class Car {
     private Date updationTime;
     private boolean isExpiredMaintCerti;
 
+    @Override
+    public String toString() {
+        return String.valueOf(carSerialNumber);
+    }
+
     public int getCarSerialNumber() {
         return carSerialNumber;
     }
@@ -30,7 +35,7 @@ public class Car {
     public void setCarSerialNumber(int carSerialNumber) {
         this.carSerialNumber = carSerialNumber;
     }
-    
+
     public boolean isIsAvailabile() {
         return isAvailabile;
     }
@@ -102,8 +107,5 @@ public class Car {
     public void setIsExpiredMaintCerti(boolean isExpiredMaintCerti) {
         this.isExpiredMaintCerti = isExpiredMaintCerti;
     }
-    
-    
-    
-    
+
 }

@@ -13,7 +13,7 @@ import model.CarCatalog;
 public class MainJFrame extends javax.swing.JFrame {
 
     CarCatalog catalog;
-    
+
     /**
      * Creates new form MainJFrame
      */
@@ -34,7 +34,11 @@ public class MainJFrame extends javax.swing.JFrame {
         splitPane = new javax.swing.JSplitPane();
         controlPanel = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
+        btnViewUpdDel = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
         btnSearch = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         workPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,34 +50,67 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSearch.setText("Search Car(s)");
+        btnViewUpdDel.setText("View / Update / Delete Car");
+        btnViewUpdDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewUpdDelActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setText("Search Cabs");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
             }
         });
 
+        jLabel1.setText("Driver Controls");
+
+        jLabel2.setText("Customer Controls");
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSearch))
-                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnViewUpdDel))
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(controlPanelLayout.createSequentialGroup()
+                                    .addGap(47, 47, 47)
+                                    .addComponent(btnSearch))
+                                .addGroup(controlPanelLayout.createSequentialGroup()
+                                    .addGap(61, 61, 61)
+                                    .addComponent(jLabel1))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(156, 156, 156)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1)
+                .addGap(45, 45, 45)
                 .addComponent(btnAdd)
-                .addGap(68, 68, 68)
+                .addGap(42, 42, 42)
+                .addComponent(btnViewUpdDel)
+                .addGap(71, 71, 71)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel2)
+                .addGap(41, 41, 41)
                 .addComponent(btnSearch)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(controlPanel);
@@ -114,12 +151,18 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         CreateJPanel createPanel = new CreateJPanel(catalog);
         splitPane.setRightComponent(createPanel);
-        
+
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnViewUpdDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewUpdDelActionPerformed
         ViewJPanel viewPanel = new ViewJPanel(catalog);
         splitPane.setRightComponent(viewPanel);
+
+    }//GEN-LAST:event_btnViewUpdDelActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        SearchJPanel searchJPanel = new SearchJPanel(catalog);
+        splitPane.setRightComponent(searchJPanel);
         
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -161,7 +204,11 @@ public class MainJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnViewUpdDel;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JPanel workPanel;
     // End of variables declaration//GEN-END:variables

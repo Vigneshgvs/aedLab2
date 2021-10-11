@@ -4,6 +4,7 @@
  */
 package ui;
 
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import model.Car;
 import model.CarCatalog;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 public class ViewJPanel extends javax.swing.JPanel {
 
     CarCatalog catalog;
+    int carForUpdate_SerialNum = 0;
 
     /**
      * Creates new form ViewJPanel
@@ -32,7 +34,7 @@ public class ViewJPanel extends javax.swing.JPanel {
         ButtonGroup isExpiredMaintCertiGroup = new ButtonGroup();
         isExpiredMaintCertiGroup.add(rdbExpiredMaintCertiN);
         isExpiredMaintCertiGroup.add(rdbExpiredMaintCertiY);
-        
+
         populateTable();
     }
 
@@ -48,9 +50,9 @@ public class ViewJPanel extends javax.swing.JPanel {
         lblTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCars = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        btnDelete = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        updateJPanel = new javax.swing.JPanel();
         rdbAvailY = new javax.swing.JRadioButton();
         rdbAvailN = new javax.swing.JRadioButton();
         lblNoOfSeats = new javax.swing.JLabel();
@@ -78,14 +80,14 @@ public class ViewJPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Serial Number", "Current City", "Is Available?", "Manufacturer", "Manuf Date", "Is Expired Maint Certif?", "Creation Date", "No of Seats", "Updation Date"
+                "Serial Number", "Current City", "Is Available?", "Manufacturer", "Manuf Date", "MaintCerti expired?", "Model Number", "Creation Time", "No of Seats", "Updation Time"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -101,12 +103,17 @@ public class ViewJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblCars);
         tblCars.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        jButton2.setText("Delete");
-
-        jButton1.setText("View");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
             }
         });
 
@@ -177,17 +184,17 @@ public class ViewJPanel extends javax.swing.JPanel {
 
         lblManufYear.setText("Manufactured Year");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout updateJPanelLayout = new javax.swing.GroupLayout(updateJPanel);
+        updateJPanel.setLayout(updateJPanelLayout);
+        updateJPanelLayout.setHorizontalGroup(
+            updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 528, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(updateJPanelLayout.createSequentialGroup()
                     .addGap(65, 65, 65)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(updateJPanelLayout.createSequentialGroup()
+                            .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(lblIsExpiredMaintCerti)
                                 .addComponent(lblIsAvail)
                                 .addComponent(lblManuf)
@@ -197,64 +204,64 @@ public class ViewJPanel extends javax.swing.JPanel {
                                 .addComponent(lblSerialNum)
                                 .addComponent(lblCurrentCity))
                             .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtManuf, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                 .addComponent(txtManufYear, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                 .addComponent(txtNoOfSeats, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                 .addComponent(txtModelNum, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                 .addComponent(txtCurrentCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(updateJPanelLayout.createSequentialGroup()
                                     .addComponent(rdbAvailY)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(rdbAvailN))
                                 .addComponent(txtSerialNum)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(updateJPanelLayout.createSequentialGroup()
                                     .addComponent(rdbExpiredMaintCertiY)
                                     .addGap(18, 18, 18)
                                     .addComponent(rdbExpiredMaintCertiN))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(updateJPanelLayout.createSequentialGroup()
                             .addGap(176, 176, 176)
                             .addComponent(btnUpdate)))
                     .addContainerGap(66, Short.MAX_VALUE)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        updateJPanelLayout.setVerticalGroup(
+            updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 396, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, updateJPanelLayout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblSerialNum)
                         .addComponent(txtSerialNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(3, 3, 3)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblCurrentCity)
                         .addComponent(txtCurrentCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblIsAvail)
                         .addComponent(rdbAvailY)
                         .addComponent(rdbAvailN))
                     .addGap(30, 30, 30)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblManuf)
                         .addComponent(txtManuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(15, 15, 15)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblManufYear)
                         .addComponent(txtManufYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblNoOfSeats, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtNoOfSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(13, 13, 13)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblModelNumb, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtModelNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblIsExpiredMaintCerti, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rdbExpiredMaintCertiY)
                             .addComponent(rdbExpiredMaintCertiN)))
                     .addGap(44, 44, 44)
@@ -279,16 +286,16 @@ public class ViewJPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnView)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnDelete)
                         .addGap(186, 186, 186))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(updateJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(379, 379, 379))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDelete, btnView});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,45 +306,79 @@ public class ViewJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnView)
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(updateJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+
+        int selectedRowIndex = tblCars.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to view & update");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblCars.getModel();
+        Car car = (Car) model.getValueAt(selectedRowIndex, 0);
+
+        txtSerialNum.setText(String.valueOf(car.getCarSerialNumber()));
+        txtCurrentCity.setText(car.getCurrentCity());
+        txtManuf.setText(car.getManufacturer());
+        txtManufYear.setText(String.valueOf(car.getManufYear()));
+        txtNoOfSeats.setText(String.valueOf(car.getNumOfSeats()));
+        txtModelNum.setText(car.getModelNum());
+        if (car.isIsAvailabile()) {
+            rdbAvailY.setSelected(true);
+        } else {
+            rdbAvailN.setSelected(true);
+        }
+        if (car.isIsExpiredMaintCerti()) {
+            rdbExpiredMaintCertiY.setSelected(true);
+        } else {
+            rdbExpiredMaintCertiN.setSelected(true);
+        }
+
+        carForUpdate_SerialNum = car.getCarSerialNumber();      // pointer for update
+    }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 
         int carSerialNumber = Integer.parseInt(txtSerialNum.getText());
         String currentCity = txtCurrentCity.getText();
-        boolean isAvailabile = (rdbAvailY.isSelected())? true:false;
+        boolean isAvailabile = (rdbAvailY.isSelected()) ? true : false;
         String manufacturer = txtManuf.getText();
         int manufYear = Integer.parseInt(txtManufYear.getText());
         int numOfSeats = Integer.parseInt(txtNoOfSeats.getText());
         String modelNum = txtModelNum.getText();
-        Date creationTime = new Date();
-        Date updationTime = null;
-        boolean isExpiredMaintCerti = (rdbExpiredMaintCertiY.isSelected())? true:false;
+        //creationTime
+        Date updationTime = new Date();
+        boolean isExpiredMaintCerti = (rdbExpiredMaintCertiY.isSelected()) ? true : false;
 
-        Car car = catalog.addNewCar();
+        Car car = catalog.getCarwSN(carForUpdate_SerialNum); // pointer for update
 
-        car.setCarSerialNumber(carSerialNumber);
-        car.setCurrentCity(currentCity);
-        car.setIsAvailabile(isAvailabile);
-        car.setManufacturer(manufacturer);
-        car.setManufYear(manufYear);
-        car.setNumOfSeats(numOfSeats);
-        car.setNumOfSeats(numOfSeats);
-        car.setIsExpiredMaintCerti(isExpiredMaintCerti);
-        car.setCreationTime(creationTime);
-        car.setUpdationTime(updationTime);
+        if (car != null) {
+            car.setCarSerialNumber(carSerialNumber);
+            car.setCurrentCity(currentCity);
+            car.setIsAvailabile(isAvailabile);
+            car.setManufacturer(manufacturer);
+            car.setManufYear(manufYear);
+            car.setNumOfSeats(numOfSeats);
+            car.setModelNum(modelNum);
+            car.setIsExpiredMaintCerti(isExpiredMaintCerti);
+            //car.setCreationTime(creationTime)
+            car.setUpdationTime(updationTime);
 
-        JOptionPane.showMessageDialog(this, "New Car details are added");
+            JOptionPane.showMessageDialog(this, "New Car details are updated");
+
+        }
+
+
+        populateTable();
+        
         txtSerialNum.setText("");
         txtCurrentCity.setText("");
         txtManuf.setText("");
@@ -375,12 +416,29 @@ public class ViewJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtManufYearActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+        int selectedRowIndex = tblCars.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblCars.getModel();
+        Car car = (Car) model.getValueAt(selectedRowIndex, 0);
+
+        catalog.deleteCar(car);
+
+        JOptionPane.showMessageDialog(this, "Selected car is deleted");
+
+        populateTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnView;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCurrentCity;
     private javax.swing.JLabel lblIsAvail;
@@ -402,6 +460,7 @@ public class ViewJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtModelNum;
     private javax.swing.JTextField txtNoOfSeats;
     private javax.swing.JTextField txtSerialNum;
+    private javax.swing.JPanel updateJPanel;
     // End of variables declaration//GEN-END:variables
 
     public void populateTable() {
@@ -411,19 +470,22 @@ public class ViewJPanel extends javax.swing.JPanel {
 
         for (Car car : catalog.getCarsFullList()) {
 
-            Object[] row = new Object[9];
-            row[0] = car.getCarSerialNumber();
+            Object[] row = new Object[10];
+            row[0] = car;   //car.getCarSerialNumber()   ob with tostring invoked - to identify apt car
             row[1] = car.getCurrentCity();
             row[2] = car.isIsAvailabile();
             row[3] = car.getManufacturer();
             row[4] = car.getManufYear();
             row[5] = car.isIsExpiredMaintCerti();
-            row[6] = car.getCreationTime();
-            row[7] = car.getNumOfSeats();
-            row[8] = car.getUpdationTime();
-            
+            row[6] = car.getModelNum();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            row[7] = sdf.format(car.getCreationTime());
+            row[8] = car.getNumOfSeats();
+            row[9] = (null!=car.getUpdationTime())?sdf.format(car.getUpdationTime()):"";
+
             model.addRow(row);
-                                            
+
         }
 
     }
