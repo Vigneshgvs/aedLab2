@@ -4,6 +4,13 @@
  */
 package ui;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Car;
 import model.CarCatalog;
 
 /**
@@ -20,6 +27,11 @@ public class SearchJPanel extends javax.swing.JPanel {
     public SearchJPanel(CarCatalog catalog) {
         initComponents();
         this.catalog = catalog;
+        
+        ButtonGroup cityGroup = new ButtonGroup();
+        cityGroup.add(rdbtnBoston);
+        cityGroup.add(rdbtnCambridge);
+        cityGroup.add(rdbtnNewYork);
     }
 
    
@@ -42,8 +54,25 @@ public class SearchJPanel extends javax.swing.JPanel {
         rdbtnNewYork = new javax.swing.JRadioButton();
         btnFind = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblFilterCars = new javax.swing.JTable();
+        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCityCars = new javax.swing.JTable();
+        btnBook = new javax.swing.JButton();
+        btnClearFilt = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtMinSeatV = new javax.swing.JTextField();
+        txtMaxSeatV = new javax.swing.JTextField();
+        btnApplyFilt = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtManufYearV = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
-        lblTitle.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         lblTitle.setText("Find your Cab");
 
         lblLocat.setText("Your Location *");
@@ -64,6 +93,100 @@ public class SearchJPanel extends javax.swing.JPanel {
         rdbtnNewYork.setText("New York");
 
         btnFind.setText("Find");
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jLabel1.setText("Available Cars in your City");
+
+        tblFilterCars.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Serial Number", "Current City", "Is Available?", "Manufacturer", "Manuf Date", "MaintCerti expired?", "Model Number", "Creation Time", "No of Seats", "Updation Time"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblFilterCars.setColumnSelectionAllowed(true);
+        tblFilterCars.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblFilterCars);
+
+        tblCityCars.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Serial Number", "Current City", "Is Available?", "Manufacturer", "Manuf Date", "MaintCerti expired?", "Model Number", "Creation Time", "No of Seats", "Updation Time"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCityCars.setColumnSelectionAllowed(true);
+        tblCityCars.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tblCityCars);
+
+        btnBook.setText("BOOK");
+        btnBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBookActionPerformed(evt);
+            }
+        });
+
+        btnClearFilt.setText("Clear Filters");
+        btnClearFilt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearFiltActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        jLabel2.setText("Filtered Cars");
+
+        jLabel3.setText("Filters");
+
+        jLabel4.setText("min - max seats");
+
+        btnApplyFilt.setText("Apply");
+        btnApplyFilt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApplyFiltActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("manufactured in a ");
+
+        jLabel6.setText("year");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -72,29 +195,74 @@ public class SearchJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(312, 312, 312)
+                        .addComponent(lblminiText))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(lblLocat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtLocat, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdbtnBoston)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdbtnCambridge)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblLocat)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtLocat, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rdbtnBoston)
+                                .addGap(18, 18, 18)
+                                .addComponent(rdbtnCambridge)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
                         .addComponent(rdbtnNewYork)
                         .addGap(60, 60, 60)
                         .addComponent(btnFind))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(324, 324, 324)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(312, 312, 312)
-                        .addComponent(lblminiText))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1016, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(376, 376, 376)
+                        .addComponent(btnBook)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnClearFilt))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(77, 77, 77)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtManufYearV, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMinSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtMaxSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(96, 96, 96)
+                        .addComponent(btnApplyFilt)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1016, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBook, btnClearFilt});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -111,7 +279,41 @@ public class SearchJPanel extends javax.swing.JPanel {
                 .addComponent(lblminiText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(401, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(196, 196, 196)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtMinSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaxSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtManufYearV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(btnApplyFilt)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 939, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBook)
+                    .addComponent(btnClearFilt))
+                .addGap(31, 31, 31))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(159, 159, 159)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1335, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -119,16 +321,214 @@ public class SearchJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocatActionPerformed
 
+    private void btnClearFiltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFiltActionPerformed
+        
+        catalog.setCarsTableList(new ArrayList<Car>());
+        populateFilterTable();
+    }//GEN-LAST:event_btnClearFiltActionPerformed
+
+    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
+        DefaultTableModel model;
+        int selectedRowIndex = tblFilterCars.getSelectedRow();
+        model = (DefaultTableModel) tblFilterCars.getModel();
+        if (selectedRowIndex < 0) {
+            selectedRowIndex = tblCityCars.getSelectedRow();
+            model = (DefaultTableModel) tblCityCars.getModel();
+            if (selectedRowIndex < 0) {
+                JOptionPane.showMessageDialog(this, "Please select a row to Book, from either FilteredList or CityList");
+                return;
+            }
+        }
+        Car car = (Car) model.getValueAt(selectedRowIndex, 0);
+        
+        //booked
+        
+        JOptionPane.showMessageDialog(this, "Your ride is Booked! Cab is on the way...");
+
+        
+        populateCityTable();
+        catalog.setCarsFilterList(new ArrayList<Car>());
+        catalog.setCarsTableList(new ArrayList<Car>());
+        populateFilterTable();
+    }//GEN-LAST:event_btnBookActionPerformed
+
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        catalog.setCarsCityList(new ArrayList<Car>());
+        catalog.setCarsFilterList(new ArrayList<Car>());
+        catalog.setCarsTableList(new ArrayList<Car>());
+        
+        if(txtLocat.getText()==null || txtLocat.getText().isBlank()) {  //null "" " "
+            if(!rdbtnBoston.isSelected()){
+                if(!rdbtnCambridge.isSelected()) {
+                    if(!rdbtnNewYork.isSelected()) {
+                        JOptionPane.showMessageDialog(this, "Please either enter or select a city to search");
+                        return;
+                    }
+                    catalog.setSelectedCity("new york");
+                }
+                catalog.setSelectedCity("cambridge");
+            }
+            catalog.setSelectedCity("boston");
+        }
+        catalog.setSelectedCity(txtLocat.getText());
+        
+        assignCityList();
+        
+        populateCityTable();
+        
+        //for safety making others to inital value
+        catalog.setCarsFilterList(new ArrayList<Car>(catalog.getCarsCityList()));
+        catalog.setCarsTableList(new ArrayList<Car>());
+        populateFilterTable();
+    }//GEN-LAST:event_btnFindActionPerformed
+
+    private void btnApplyFiltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyFiltActionPerformed
+        
+        List<Car> temp = new ArrayList<Car>(filterSeat());
+        List<Car> temp2 = new ArrayList<Car>(filterManufYear(temp));
+        
+        populateFilterTable();
+        
+    }//GEN-LAST:event_btnApplyFiltActionPerformed
+    
+    public List<Car> filterSeat(){
+        int min = (txtMinSeatV.getText()==null || txtMinSeatV.getText().isEmpty()) ? -1 : Integer.parseInt(txtMinSeatV.getText());
+        int max = (txtMaxSeatV.getText()==null || txtMaxSeatV.getText().isEmpty()) ? -1 : Integer.parseInt(txtMaxSeatV.getText());
+        
+            if (min>=0) {
+                for (Car car : catalog.getCarsFilterList()) {
+                if(min <= car.getNumOfSeats()) {
+                    if (max<0) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    else if (max>=car.getNumOfSeats()) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                          catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    //dont add
+                }
+                //dont add
+                }
+            }
+            else if (max>=0) {
+                for (Car car : catalog.getCarsFilterList()) {
+                if (max>=car.getNumOfSeats()) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                }
+                //dont add
+                }
+            }
+            //skip
+            
+        return catalog.getCarsTableList().isEmpty()? catalog.getCarsFilterList() : catalog.getCarsTableList();
+        
+    }
+    private List<Car> filterManufYear(List<Car> temp) {
+        int year = (txtManufYearV.getText()==null || txtManufYearV.getText().isEmpty()) ? -1 : Integer.parseInt(txtManufYearV.getText());
+        if (year>=0) {
+            for (Car car : temp) {
+                if (car.getManufYear()==year){
+                    //add
+                    if (!catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().add(car);
+                    }
+                }
+                //dont add
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+        
+    public void assignCityList() {                          // to assign city list
+        for (Car car : catalog.getCarsFullList()) {
+            if (catalog.getSelectedCity().equalsIgnoreCase(car.getCurrentCity())) {
+                catalog.getCarsCityList().add(car);
+            }
+        }
+    }
+    
+    public void populateCityTable() {
+        DefaultTableModel model = (DefaultTableModel) tblCityCars.getModel();
+        model.setRowCount(0);
+
+        for (Car car : catalog.getCarsCityList()) {
+            Object[] row = new Object[10];
+            row[0] = car;   //car.getCarSerialNumber()   ob with tostring invoked - to identify apt car
+            row[1] = car.getCurrentCity();
+            row[2] = car.isIsAvailabile();
+            row[3] = car.getManufacturer();
+            row[4] = car.getManufYear();
+            row[5] = car.isIsExpiredMaintCerti();
+            row[6] = car.getModelNum();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            row[7] = sdf.format(car.getCreationTime());
+            row[8] = car.getNumOfSeats();
+            row[9] = (null!=car.getUpdationTime())?sdf.format(car.getUpdationTime()):"";
+
+            model.addRow(row);
+        }
+    }
+    
+    public void populateFilterTable() {
+        DefaultTableModel model = (DefaultTableModel) tblFilterCars.getModel();
+        model.setRowCount(0);
+
+        for (Car car : catalog.getCarsTableList()) {
+            Object[] row = new Object[10];
+            row[0] = car;   //car.getCarSerialNumber()   ob with tostring invoked - to identify apt car
+            row[1] = car.getCurrentCity();
+            row[2] = car.isIsAvailabile();
+            row[3] = car.getManufacturer();
+            row[4] = car.getManufYear();
+            row[5] = car.isIsExpiredMaintCerti();
+            row[6] = car.getModelNum();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            row[7] = sdf.format(car.getCreationTime());
+            row[8] = car.getNumOfSeats();
+            row[9] = (null!=car.getUpdationTime())?sdf.format(car.getUpdationTime()):"";
+
+            model.addRow(row);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApplyFilt;
+    private javax.swing.JButton btnBook;
+    private javax.swing.JButton btnClearFilt;
     private javax.swing.JButton btnFind;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblLocat;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblminiText;
     private javax.swing.JRadioButton rdbtnBoston;
     private javax.swing.JRadioButton rdbtnCambridge;
     private javax.swing.JRadioButton rdbtnNewYork;
+    private javax.swing.JTable tblCityCars;
+    private javax.swing.JTable tblFilterCars;
     private javax.swing.JTextField txtLocat;
+    private javax.swing.JTextField txtManufYearV;
+    private javax.swing.JTextField txtMaxSeatV;
+    private javax.swing.JTextField txtMinSeatV;
     // End of variables declaration//GEN-END:variables
 }

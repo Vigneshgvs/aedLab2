@@ -21,6 +21,7 @@ public class CarCatalog {
     private boolean isFirstTime = true;
 
     private Date lastUpdated;
+    private String selectedCity;
     private int totalCars = 0;
     private int availableCars = 0;
     private int unAvailableCars = 0;
@@ -221,5 +222,14 @@ public class CarCatalog {
     public void setCarsTableList(List<Car> carsTableList) {
         this.carsTableList = carsTableList;
     }
+
+    public String getSelectedCity() {
+        return selectedCity;
+    }
+
+    public void setSelectedCity(String selectedCity) {
+        this.selectedCity = selectedCity;
+    }
+    
 
 }
