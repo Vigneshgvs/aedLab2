@@ -8,8 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -22,6 +24,9 @@ public class CarCatalog {
 
     private Date lastUpdated;
     private String selectedCity;
+    private Set<String> manufSet = new LinkedHashSet<String>();
+    private Set<String> citySet = new LinkedHashSet<String>();
+    
     private int totalCars = 0;
     private int availableCars = 0;
     private int unAvailableCars = 0;
@@ -34,7 +39,8 @@ public class CarCatalog {
     //singleton class - coz only values of lastupdated, carsfulllist need to be holding record from starting
     //no need of singleton class (private cons) - coz we are gonna call this cons only during mainjframe initialisation
     public CarCatalog() {
-
+        manufSet.add("--Select--");
+        citySet.add("--Select--");
     }
 
     /*public static CarCatalog getObj(){
@@ -182,6 +188,10 @@ public class CarCatalog {
     public void setAvailableCars(int availableCars) {
         this.availableCars = availableCars;
     }
+    
+    public void incrementAvailableCars() {
+        this.availableCars += 1;
+    }
 
     public int getUnAvailableCars() {
         return unAvailableCars;
@@ -189,6 +199,10 @@ public class CarCatalog {
 
     public void setUnAvailableCars(int unAvailableCars) {
         this.unAvailableCars = unAvailableCars;
+    }
+    
+    public void incrementUnAvailableCars() {
+        this.unAvailableCars += 1;
     }
 
     public List<Car> getCarsFullList() {
@@ -230,6 +244,23 @@ public class CarCatalog {
     public void setSelectedCity(String selectedCity) {
         this.selectedCity = selectedCity;
     }
+
+    public Set<String> getManufSet() {
+        return manufSet;
+    }
+
+    public void setManufSet(Set<String> manufSet) {
+        this.manufSet = manufSet;
+    }
+
+    public Set<String> getCitySet() {
+        return citySet;
+    }
+
+    public void setCitySet(Set<String> citySet) {
+        this.citySet = citySet;
+    }
+    
     
 
 }

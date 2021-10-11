@@ -5,11 +5,14 @@
 package ui;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import model.Car;
 import model.CarCatalog;
 import java.util.Date;
+import java.util.List;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +23,8 @@ public class ViewJPanel extends javax.swing.JPanel {
 
     CarCatalog catalog;
     int carForUpdate_SerialNum = 0;
+    ButtonGroup availGroup;
+    ButtonGroup expiredMaintCertiGroup;
 
     /**
      * Creates new form ViewJPanel
@@ -36,6 +41,24 @@ public class ViewJPanel extends javax.swing.JPanel {
         isExpiredMaintCertiGroup.add(rdbExpiredMaintCertiY);
 
         populateTable();
+        
+        String[] manufArray = new String[catalog.getManufSet().size()];
+        catalog.getManufSet().toArray(manufArray);
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(manufArray);
+        comboManuf.setModel( model );
+        
+        String[] citiesArray = new String[catalog.getManufSet().size()];
+        catalog.getCitySet().toArray(citiesArray);
+        DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<>(citiesArray);
+        comboCities.setModel( model2 );
+        
+        availGroup = new ButtonGroup();
+        availGroup.add(btnYesAvail);
+        availGroup.add(btnNoAvail);
+        
+        expiredMaintCertiGroup = new ButtonGroup();
+        expiredMaintCertiGroup.add(btnExpMaintCertiF);
+        expiredMaintCertiGroup.add(btnNotExpMaintCertiF);
     }
 
     /**
@@ -72,8 +95,50 @@ public class ViewJPanel extends javax.swing.JPanel {
         txtManufYear = new javax.swing.JTextField();
         lblManuf = new javax.swing.JLabel();
         lblManufYear = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btnClearFilt = new javax.swing.JButton();
+        headFilters = new javax.swing.JLabel();
+        lblSeatsF = new javax.swing.JLabel();
+        txtMinSeatV = new javax.swing.JTextField();
+        lblModelNumF = new javax.swing.JLabel();
+        txtMaxSeatV = new javax.swing.JTextField();
+        btnApplyFilt = new javax.swing.JButton();
+        lblYearF2 = new javax.swing.JLabel();
+        txtModelNumV = new javax.swing.JTextField();
+        txtManufYearV = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        lblYearF = new javax.swing.JLabel();
+        txtSerialNumV = new javax.swing.JTextField();
+        lblAvailabilityF = new javax.swing.JLabel();
+        lblManufF = new javax.swing.JLabel();
+        comboManuf = new javax.swing.JComboBox<>();
+        btnYesAvail = new javax.swing.JRadioButton();
+        btnNoAvail = new javax.swing.JRadioButton();
+        lblMaintCertiF = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        btnExpMaintCertiF = new javax.swing.JRadioButton();
+        btnNotExpMaintCertiF = new javax.swing.JRadioButton();
+        btnProceedToUpdate = new javax.swing.JButton();
+        headFiltCars = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblFilterCars = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        comboCities = new javax.swing.JComboBox<>();
+        lblAvailCarsV = new javax.swing.JLabel();
+        lblUnavailCarsV = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblLastUpdatedV = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblTotalCarsV = new javax.swing.JLabel();
+        lblz = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btnDelete1 = new javax.swing.JButton();
 
-        lblTitle.setText("View Cars");
+        lblTitle.setFont(new java.awt.Font("Lucida Grande", 3, 13)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(255, 153, 0));
+        lblTitle.setText("View / Update Cars");
 
         tblCars.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,7 +175,8 @@ public class ViewJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnView.setText("View");
+        btnView.setBackground(new java.awt.Color(255, 153, 0));
+        btnView.setText("Proceed to Update");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewActionPerformed(evt);
@@ -188,7 +254,7 @@ public class ViewJPanel extends javax.swing.JPanel {
         updateJPanel.setLayout(updateJPanelLayout);
         updateJPanelLayout.setHorizontalGroup(
             updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 528, Short.MAX_VALUE)
+            .addGap(0, 425, Short.MAX_VALUE)
             .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(updateJPanelLayout.createSequentialGroup()
                     .addGap(65, 65, 65)
@@ -205,11 +271,11 @@ public class ViewJPanel extends javax.swing.JPanel {
                                 .addComponent(lblCurrentCity))
                             .addGap(18, 18, 18)
                             .addGroup(updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtManuf, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                .addComponent(txtManufYear, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                .addComponent(txtNoOfSeats, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                .addComponent(txtModelNum, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                .addComponent(txtCurrentCity, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                .addComponent(txtManuf)
+                                .addComponent(txtManufYear)
+                                .addComponent(txtNoOfSeats)
+                                .addComponent(txtModelNum)
+                                .addComponent(txtCurrentCity)
                                 .addGroup(updateJPanelLayout.createSequentialGroup()
                                     .addComponent(rdbAvailY)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -222,7 +288,7 @@ public class ViewJPanel extends javax.swing.JPanel {
                         .addGroup(updateJPanelLayout.createSequentialGroup()
                             .addGap(176, 176, 176)
                             .addComponent(btnUpdate)))
-                    .addContainerGap(66, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         updateJPanelLayout.setVerticalGroup(
             updateJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,30 +335,258 @@ public class ViewJPanel extends javax.swing.JPanel {
                     .addContainerGap()))
         );
 
+        jLabel4.setFont(new java.awt.Font("Marker Felt", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 153, 0));
+        jLabel4.setText("Uber");
+
+        btnClearFilt.setText("Clear Filters");
+        btnClearFilt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearFiltActionPerformed(evt);
+            }
+        });
+
+        headFilters.setText("Filters");
+
+        lblSeatsF.setText("min - max seats");
+
+        lblModelNumF.setText("model number");
+
+        btnApplyFilt.setBackground(new java.awt.Color(255, 153, 0));
+        btnApplyFilt.setText("Apply");
+        btnApplyFilt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApplyFiltActionPerformed(evt);
+            }
+        });
+
+        lblYearF2.setText("manufactured in a ");
+
+        jLabel3.setText("serial number");
+
+        lblYearF.setText("year");
+
+        lblAvailabilityF.setText("availability");
+
+        lblManufF.setText("manufacturers");
+
+        comboManuf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboManuf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboManufActionPerformed(evt);
+            }
+        });
+
+        btnYesAvail.setText("Yes");
+
+        btnNoAvail.setText("No");
+
+        lblMaintCertiF.setText("maint certificate");
+
+        btnExpMaintCertiF.setText("Expired");
+        btnExpMaintCertiF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExpMaintCertiFActionPerformed(evt);
+            }
+        });
+
+        btnNotExpMaintCertiF.setText("Not Expired");
+
+        btnProceedToUpdate.setBackground(new java.awt.Color(255, 153, 0));
+        btnProceedToUpdate.setText("Proceed to Update");
+        btnProceedToUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProceedToUpdateActionPerformed(evt);
+            }
+        });
+
+        headFiltCars.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        headFiltCars.setText("Filtered Cars - to View");
+
+        tblFilterCars.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Serial Number", "Current City", "Is Available?", "Manufacturer", "Manuf Date", "MaintCerti expired?", "Model Number", "Creation Time", "No of Seats", "Updation Time"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblFilterCars.setColumnSelectionAllowed(true);
+        tblFilterCars.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tblFilterCars);
+        tblFilterCars.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        jLabel1.setText("in cities");
+
+        comboCities.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCities.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCitiesActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Unavailable:");
+
+        jLabel7.setText("Table Last Updated:");
+
+        lblz.setText("Total");
+
+        jLabel2.setText("Available:");
+
+        jLabel6.setText("View All Cars");
+
+        jLabel8.setText("Fill below to update");
+
+        btnDelete1.setText("Delete");
+        btnDelete1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelete1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(419, 419, 419)
+                .addComponent(lblTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(141, 141, 141))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnView)
+                .addGap(61, 61, 61)
+                .addComponent(btnDelete)
+                .addGap(423, 423, 423))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(71, 71, 71)
+                                    .addComponent(lblYearF2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtManufYearV, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblYearF))
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(headFilters))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(78, 78, 78)
+                                    .addComponent(lblSeatsF)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtMinSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtMaxSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(325, 325, 325)
+                                            .addComponent(jLabel3)
+                                            .addGap(31, 31, 31)
+                                            .addComponent(txtSerialNumV, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(96, 96, 96)
+                                            .addComponent(btnApplyFilt)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(btnClearFilt)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1016, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(113, 113, 113)
+                                    .addComponent(lblAvailabilityF)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblMaintCertiF)
+                                    .addGap(18, 18, 18)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(btnExpMaintCertiF)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnNotExpMaintCertiF)
+                                    .addGap(613, 613, 613))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtModelNumV, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(comboManuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(17, 17, 17)
+                                            .addComponent(btnYesAvail)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btnNoAvail)))
+                                    .addGap(0, 0, 0)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(442, 442, 442)
-                        .addComponent(lblTitle))
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1016, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(headFiltCars)
+                                .addGap(142, 142, 142)
+                                .addComponent(lblz)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblTotalCarsV, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblAvailCarsV, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblUnavailCarsV, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(71, 71, 71)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblLastUpdatedV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblManufF)
+                            .addComponent(jLabel1)
+                            .addComponent(lblModelNumF))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboCities, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1016, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnView)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDelete)
-                        .addGap(186, 186, 186))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(updateJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(379, 379, 379))))
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(331, 331, 331)
+                        .addComponent(btnProceedToUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(updateJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDelete, btnView});
@@ -300,17 +594,92 @@ public class ViewJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(lblTitle)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(lblTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)))
+                .addGap(4, 4, 4)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnView)
                     .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(headFilters)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSeatsF, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMinSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtMaxSeatV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtSerialNumV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblYearF2)
+                            .addComponent(txtManufYearV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblYearF)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnApplyFilt)
+                            .addComponent(btnClearFilt))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAvailabilityF)
+                    .addComponent(btnYesAvail)
+                    .addComponent(btnNoAvail))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMaintCertiF)
+                    .addComponent(btnExpMaintCertiF)
+                    .addComponent(btnNotExpMaintCertiF))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblModelNumF)
+                    .addComponent(txtModelNumV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboManuf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblManufF))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboCities, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(headFiltCars, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lblAvailCarsV, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblz))
+                        .addComponent(jLabel7)
+                        .addComponent(lblTotalCarsV, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLastUpdatedV, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblUnavailCarsV, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProceedToUpdate)
+                    .addComponent(btnDelete1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -325,25 +694,93 @@ public class ViewJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblCars.getModel();
         Car car = (Car) model.getValueAt(selectedRowIndex, 0);
 
-        txtSerialNum.setText(String.valueOf(car.getCarSerialNumber()));
-        txtCurrentCity.setText(car.getCurrentCity());
-        txtManuf.setText(car.getManufacturer());
-        txtManufYear.setText(String.valueOf(car.getManufYear()));
-        txtNoOfSeats.setText(String.valueOf(car.getNumOfSeats()));
-        txtModelNum.setText(car.getModelNum());
-        if (car.isIsAvailabile()) {
-            rdbAvailY.setSelected(true);
-        } else {
-            rdbAvailN.setSelected(true);
-        }
-        if (car.isIsExpiredMaintCerti()) {
-            rdbExpiredMaintCertiY.setSelected(true);
-        } else {
-            rdbExpiredMaintCertiN.setSelected(true);
-        }
+        populateUpdateForm(car);
 
         carForUpdate_SerialNum = car.getCarSerialNumber();      // pointer for update
     }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+        int selectedRowIndex = tblCars.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblCars.getModel();
+        Car car = (Car) model.getValueAt(selectedRowIndex, 0);
+
+        catalog.deleteCar(car);
+        
+        catalog.setLastUpdated(new Date());
+
+        JOptionPane.showMessageDialog(this, "Selected car is deleted");
+
+        populateTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearFiltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFiltActionPerformed
+
+        catalog.setCarsTableList(new ArrayList<Car>());
+        populateFilterTable();
+        clearFilters();
+    }//GEN-LAST:event_btnClearFiltActionPerformed
+
+    private void btnApplyFiltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyFiltActionPerformed
+
+        //List<Car> temp = new ArrayList<Car>(catalog.getCarsTableList().isEmpty()? catalog.getCarsFilterList() : catalog.getCarsTableList());
+        //for every apply click from full list table take and filter
+        List<Car> temp = new ArrayList<Car>(catalog.getCarsFullList());
+        catalog.setCarsTableList(new ArrayList<Car>());
+
+        if(txtSerialNumV.getText()==null || txtSerialNumV.getText().isEmpty()) {
+            temp = new ArrayList<Car>(filterSeat(temp));
+            temp = new ArrayList<Car>(filterManufYear(temp));
+            temp = new ArrayList<Car>(filterAvailability(temp));
+            temp = new ArrayList<Car>(filterExpiredMaintCerti(temp));
+            temp = new ArrayList<Car>(filterModelNum(temp));
+            temp = new ArrayList<Car>(filterManuf(temp));
+            temp = new ArrayList<Car>(filterCity(temp));
+        } else {
+            temp = new ArrayList<Car>(filterSerialNum(temp));
+            clearLeftFilters();
+        }
+
+        populateFilterTable();
+
+    }//GEN-LAST:event_btnApplyFiltActionPerformed
+
+    private void comboManufActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboManufActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboManufActionPerformed
+
+    private void btnExpMaintCertiFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpMaintCertiFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExpMaintCertiFActionPerformed
+
+    private void txtManufYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManufYearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtManufYearActionPerformed
+
+    private void txtManufActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManufActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtManufActionPerformed
+
+    private void txtCurrentCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCurrentCityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCurrentCityActionPerformed
+
+    private void txtModelNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModelNumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtModelNumActionPerformed
+
+    private void txtNoOfSeatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoOfSeatsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNoOfSeatsActionPerformed
+
+    private void txtSerialNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerialNumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSerialNumActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 
@@ -372,13 +809,16 @@ public class ViewJPanel extends javax.swing.JPanel {
             //car.setCreationTime(creationTime)
             car.setUpdationTime(updationTime);
 
+            catalog.setLastUpdated(updationTime);
+
             JOptionPane.showMessageDialog(this, "New Car details are updated");
 
         }
 
-
         populateTable();
-        
+        populateFilterTable();
+        clearFilters();
+                
         txtSerialNum.setText("");
         txtCurrentCity.setText("");
         txtManuf.setText("");
@@ -389,35 +829,96 @@ public class ViewJPanel extends javax.swing.JPanel {
         rdbAvailN.setSelected(false);
         rdbExpiredMaintCertiY.setSelected(false);
         rdbExpiredMaintCertiN.setSelected(false);
-
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void txtSerialNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerialNumActionPerformed
+    private void btnProceedToUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProceedToUpdateActionPerformed
+        
+        int selectedRowIndex = tblFilterCars.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to view & update");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblFilterCars.getModel();
+        Car car = (Car) model.getValueAt(selectedRowIndex, 0);
+
+        populateUpdateForm(car);
+
+        carForUpdate_SerialNum = car.getCarSerialNumber();      // pointer for update
+    }//GEN-LAST:event_btnProceedToUpdateActionPerformed
+    
+    public void populateUpdateForm(Car car){
+        txtSerialNum.setText(String.valueOf(car.getCarSerialNumber()));
+        txtCurrentCity.setText(car.getCurrentCity());
+        txtManuf.setText(car.getManufacturer());
+        txtManufYear.setText(String.valueOf(car.getManufYear()));
+        txtNoOfSeats.setText(String.valueOf(car.getNumOfSeats()));
+        txtModelNum.setText(car.getModelNum());
+        if (car.isIsAvailabile()) {
+            rdbAvailY.setSelected(true);
+        } else {
+            rdbAvailN.setSelected(true);
+        }
+        if (car.isIsExpiredMaintCerti()) {
+            rdbExpiredMaintCertiY.setSelected(true);
+        } else {
+            rdbExpiredMaintCertiN.setSelected(true);
+        }
+    }
+    public void populateFilterTable() {
+        DefaultTableModel model = (DefaultTableModel) tblFilterCars.getModel();
+        model.setRowCount(0);
+
+        for (Car car : catalog.getCarsTableList()) {
+            Object[] row = new Object[10];
+            row[0] = car;   //car.getCarSerialNumber()   ob with tostring invoked - to identify apt car
+            row[1] = car.getCurrentCity();
+            row[2] = car.isIsAvailabile();
+            row[3] = car.getManufacturer();
+            row[4] = car.getManufYear();
+            row[5] = car.isIsExpiredMaintCerti();
+            row[6] = car.getModelNum();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            row[7] = sdf.format(car.getCreationTime());
+            row[8] = car.getNumOfSeats();
+            row[9] = (null!=car.getUpdationTime())?sdf.format(car.getUpdationTime()):"";
+
+            model.addRow(row);
+        }
+    }
+    
+    public void clearFilters() {        //clears filter values
+        txtSerialNumV.setText("");
+        clearLeftFilters();
+    }
+    public void clearLeftFilters(){     
+        txtMaxSeatV.setText("");
+        txtMinSeatV.setText("");
+        txtManufYearV.setText("");
+        txtModelNumV.setText("");
+        availGroup.clearSelection();
+        expiredMaintCertiGroup.clearSelection();
+        comboManuf.setSelectedItem("--Select--");
+        comboCities.setSelectedItem("--Select--");
+    }
+    
+    public void clearLabelValues(){      //clears labels
+        catalog.setAvailableCars(0);
+        catalog.setUnAvailableCars(0);
+        catalog.setTotalCars(0);
+        
+        lblTotalCarsV.setText("");
+        lblAvailCarsV.setText("");
+        lblUnavailCarsV.setText("");
+        lblLastUpdatedV.setText("");
+    }
+    
+    private void comboCitiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCitiesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSerialNumActionPerformed
+    }//GEN-LAST:event_comboCitiesActionPerformed
 
-    private void txtNoOfSeatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoOfSeatsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNoOfSeatsActionPerformed
-
-    private void txtModelNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModelNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtModelNumActionPerformed
-
-    private void txtCurrentCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCurrentCityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCurrentCityActionPerformed
-
-    private void txtManufActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManufActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtManufActionPerformed
-
-    private void txtManufYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtManufYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtManufYearActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
         int selectedRowIndex = tblCars.getSelectedRow();
         if (selectedRowIndex < 0) {
             JOptionPane.showMessageDialog(this, "Please select a row to delete");
@@ -428,38 +929,80 @@ public class ViewJPanel extends javax.swing.JPanel {
         Car car = (Car) model.getValueAt(selectedRowIndex, 0);
 
         catalog.deleteCar(car);
+        
+        catalog.setLastUpdated(new Date());
 
         JOptionPane.showMessageDialog(this, "Selected car is deleted");
 
         populateTable();
-    }//GEN-LAST:event_btnDeleteActionPerformed
+    }//GEN-LAST:event_btnDelete1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApplyFilt;
+    private javax.swing.JButton btnClearFilt;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDelete1;
+    private javax.swing.JRadioButton btnExpMaintCertiF;
+    private javax.swing.JRadioButton btnNoAvail;
+    private javax.swing.JRadioButton btnNotExpMaintCertiF;
+    private javax.swing.JButton btnProceedToUpdate;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnView;
+    private javax.swing.JRadioButton btnYesAvail;
+    private javax.swing.JComboBox<String> comboCities;
+    private javax.swing.JComboBox<String> comboManuf;
+    private javax.swing.JLabel headFiltCars;
+    private javax.swing.JLabel headFilters;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblAvailCarsV;
+    private javax.swing.JLabel lblAvailabilityF;
     private javax.swing.JLabel lblCurrentCity;
     private javax.swing.JLabel lblIsAvail;
     private javax.swing.JLabel lblIsExpiredMaintCerti;
+    private javax.swing.JLabel lblLastUpdatedV;
+    private javax.swing.JLabel lblMaintCertiF;
     private javax.swing.JLabel lblManuf;
+    private javax.swing.JLabel lblManufF;
     private javax.swing.JLabel lblManufYear;
+    private javax.swing.JLabel lblModelNumF;
     private javax.swing.JLabel lblModelNumb;
     private javax.swing.JLabel lblNoOfSeats;
+    private javax.swing.JLabel lblSeatsF;
     private javax.swing.JLabel lblSerialNum;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTotalCarsV;
+    private javax.swing.JLabel lblUnavailCarsV;
+    private javax.swing.JLabel lblYearF;
+    private javax.swing.JLabel lblYearF2;
+    private javax.swing.JLabel lblz;
     private javax.swing.JRadioButton rdbAvailN;
     private javax.swing.JRadioButton rdbAvailY;
     private javax.swing.JRadioButton rdbExpiredMaintCertiN;
     private javax.swing.JRadioButton rdbExpiredMaintCertiY;
     private javax.swing.JTable tblCars;
+    private javax.swing.JTable tblFilterCars;
     private javax.swing.JTextField txtCurrentCity;
     private javax.swing.JTextField txtManuf;
     private javax.swing.JTextField txtManufYear;
+    private javax.swing.JTextField txtManufYearV;
+    private javax.swing.JTextField txtMaxSeatV;
+    private javax.swing.JTextField txtMinSeatV;
     private javax.swing.JTextField txtModelNum;
+    private javax.swing.JTextField txtModelNumV;
     private javax.swing.JTextField txtNoOfSeats;
     private javax.swing.JTextField txtSerialNum;
+    private javax.swing.JTextField txtSerialNumV;
     private javax.swing.JPanel updateJPanel;
     // End of variables declaration//GEN-END:variables
 
@@ -488,5 +1031,226 @@ public class ViewJPanel extends javax.swing.JPanel {
 
         }
 
+    }
+    
+    public List<Car> filterSeat(List<Car> temp){
+        int min = (txtMinSeatV.getText()==null || txtMinSeatV.getText().isEmpty()) ? -1 : Integer.parseInt(txtMinSeatV.getText());
+        int max = (txtMaxSeatV.getText()==null || txtMaxSeatV.getText().isEmpty()) ? -1 : Integer.parseInt(txtMaxSeatV.getText());
+        
+            if (min>=0) {
+                for (Car car : temp) {
+                  if(min <= car.getNumOfSeats()) {
+                    if (max<0) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    else if (max>=car.getNumOfSeats()) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                          catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    //dont add, remove
+                    else if (catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().remove(car);
+                    }
+                  }
+                  //dont add, remove
+                  else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                  }
+               }
+            }
+            else if (max>=0) {
+                for (Car car : temp) {
+                if (max>=car.getNumOfSeats()) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                }
+                //dont add, remove
+                else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                }
+                }
+            }
+            //skip
+            
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+        
+    }
+    public List<Car> filterManufYear(List<Car> temp) {
+        int year = (txtManufYearV.getText()==null || txtManufYearV.getText().isEmpty()) ? -1 : Integer.parseInt(txtManufYearV.getText());
+        if (year>=0) {
+            for (Car car : temp) {
+                if (car.getManufYear()==year){
+                    //add
+                    if (!catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().add(car);
+                    }
+                }
+                //dont add, remove
+                else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+    public List<Car> filterAvailability(List<Car> temp) {
+        int toCheck = (btnYesAvail.isSelected())? 1: (btnNoAvail.isSelected())? 0: -1;
+        
+        if (toCheck>=0){
+            //one of them is selected
+            for (Car car : temp) {
+                if (toCheck==1) {
+                    if(car.isIsAvailabile()==true) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    //dont add, remove
+                    else if (catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().remove(car);
+                    }
+                } else { //toCheck 0
+                    if(car.isIsAvailabile()==false) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    //dont add, remove
+                    else if (catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().remove(car);
+                    }
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+    public List<Car> filterExpiredMaintCerti(List<Car> temp) {
+        int toCheck = (btnExpMaintCertiF.isSelected())? 1: (btnNotExpMaintCertiF.isSelected())? 0: -1;
+        
+        if (toCheck>=0){
+            //one of them is selected
+            for (Car car : temp) {
+                if (toCheck==1) {
+                    if(car.isIsExpiredMaintCerti()==true) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    //dont add, remove
+                    else if (catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().remove(car);
+                    }
+                } else { //toCheck 0
+                    if(car.isIsExpiredMaintCerti()==false) {
+                        //add
+                        if (!catalog.getCarsTableList().contains(car)) {
+                            catalog.getCarsTableList().add(car);
+                        }
+                    }
+                    //dont add, remove
+                    else if (catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().remove(car);
+                    }
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+    public List<Car> filterModelNum(List<Car> temp) {
+        String modelNum = (txtModelNumV.getText()==null || txtModelNumV.getText().isEmpty()) ? null : txtModelNumV.getText();
+        if (modelNum!=null) {
+            for (Car car : temp) {
+                if (modelNum.equalsIgnoreCase(car.getModelNum())){
+                    //add
+                    if (!catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().add(car);
+                    }
+                }
+                //dont add, remove
+                else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+    public List<Car> filterManuf(List<Car> temp) {
+        String manuf = ("--Select--".equals(String.valueOf(comboManuf.getSelectedItem())))? null : String.valueOf(comboManuf.getSelectedItem());
+        if (manuf!=null) {
+            for (Car car : temp) {
+                if (manuf.equalsIgnoreCase(car.getManufacturer())){
+                    //add
+                    if (!catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().add(car);
+                    }
+                }
+                //dont add, remove
+                else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+     public List<Car> filterCity(List<Car> temp) {
+        String city = ("--Select--".equals(String.valueOf(comboCities.getSelectedItem())))? null : String.valueOf(comboCities.getSelectedItem());
+        if (city!=null) {
+            for (Car car : temp) {
+                if (city.equalsIgnoreCase(car.getCurrentCity())){
+                    //add
+                    if (!catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().add(car);
+                    }
+                }
+                //dont add, remove
+                else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+    public List<Car> filterSerialNum(List<Car> temp) {
+        int serialNum = (txtSerialNumV.getText()==null || txtSerialNumV.getText().isEmpty()) ? -1 : Integer.parseInt(txtSerialNumV.getText());
+        if (serialNum!=-1) {
+            for (Car car : temp) {
+                if (serialNum == car.getCarSerialNumber()){
+                    //add
+                    if (!catalog.getCarsTableList().contains(car)) {
+                        catalog.getCarsTableList().add(car);
+                    }
+                }
+                //dont add, remove
+                else if (catalog.getCarsTableList().contains(car)) {
+                    catalog.getCarsTableList().remove(car);
+                }
+            }
+        }
+        //skip
+        return catalog.getCarsTableList().isEmpty()? temp : catalog.getCarsTableList();
+    }
+        
+    public void assignCityList() {                          // to assign city list
+        for (Car car : catalog.getCarsFullList()) {
+            if (catalog.getSelectedCity().equalsIgnoreCase(car.getCurrentCity())) {
+                catalog.getCarsCityList().add(car);
+            }
+        }
     }
 }

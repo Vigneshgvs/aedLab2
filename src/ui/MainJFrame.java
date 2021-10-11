@@ -4,6 +4,7 @@
  */
 package ui;
 
+import javax.swing.JScrollPane;
 import model.CarCatalog;
 
 /**
@@ -39,6 +40,9 @@ public class MainJFrame extends javax.swing.JFrame {
         btnSearch = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         workPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,9 +68,21 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Driver Controls");
 
+        jLabel2.setForeground(new java.awt.Color(255, 153, 0));
         jLabel2.setText("Customer Controls");
+
+        jLabel3.setFont(new java.awt.Font("Marker Felt", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 153, 0));
+        jLabel3.setText("Uber");
+
+        jLabel4.setFont(new java.awt.Font("Kokonor", 0, 14)); // NOI18N
+        jLabel4.setText("Your Travel Companion");
+
+        jLabel5.setFont(new java.awt.Font("Lao Sangam MN", 0, 12)); // NOI18N
+        jLabel5.setText("© Uber.Inc 2021");
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -78,22 +94,33 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(controlPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 12, Short.MAX_VALUE)
                                 .addComponent(btnViewUpdDel))
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(controlPanelLayout.createSequentialGroup()
-                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(controlPanelLayout.createSequentialGroup()
-                                    .addGap(47, 47, 47)
-                                    .addComponent(btnSearch))
-                                .addGroup(controlPanelLayout.createSequentialGroup()
-                                    .addGap(61, 61, 61)
-                                    .addComponent(jLabel1))))
+                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(controlPanelLayout.createSequentialGroup()
+                                        .addGap(47, 47, 47)
+                                        .addComponent(btnSearch))
+                                    .addGroup(controlPanelLayout.createSequentialGroup()
+                                        .addGap(61, 61, 61)
+                                        .addComponent(jLabel1))))
+                            .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(jLabel3))
+                            .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addComponent(jLabel4)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +137,13 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(41, 41, 41)
                 .addComponent(btnSearch)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addGap(24, 24, 24))
         );
 
         splitPane.setLeftComponent(controlPanel);
@@ -119,7 +152,7 @@ public class MainJFrame extends javax.swing.JFrame {
         workPanel.setLayout(workPanelLayout);
         workPanelLayout.setHorizontalGroup(
             workPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 889, Short.MAX_VALUE)
+            .addGap(0, 678, Short.MAX_VALUE)
         );
         workPanelLayout.setVerticalGroup(
             workPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,19 +183,22 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         CreateJPanel createPanel = new CreateJPanel(catalog);
-        splitPane.setRightComponent(createPanel);
+        JScrollPane scrPane = new JScrollPane(createPanel);
+        splitPane.setRightComponent(scrPane);
 
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnViewUpdDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewUpdDelActionPerformed
         ViewJPanel viewPanel = new ViewJPanel(catalog);
-        splitPane.setRightComponent(viewPanel);
+        JScrollPane scrPane = new JScrollPane(viewPanel);
+        splitPane.setRightComponent(scrPane);
 
     }//GEN-LAST:event_btnViewUpdDelActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         SearchJPanel searchJPanel = new SearchJPanel(catalog);
-        splitPane.setRightComponent(searchJPanel);
+        JScrollPane scrPane = new JScrollPane(searchJPanel);
+        splitPane.setRightComponent(scrPane);
         
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -208,6 +244,9 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel controlPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JPanel workPanel;
